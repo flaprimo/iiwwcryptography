@@ -124,8 +124,12 @@ public class Scambiatore implements Rotore, ClickListener {
 	}
 
 	public void goNext(int how) {
-		if(this.actualOffset + how >= 26)
+		if(this.actualOffset + this.initialOffset + how >= 26){
 			this.l.fireClickEvent(new ClickEvent());
+			this.initialOffset = 0;
+			this.actualOffset = 0;
+			how = 0;
+		}
 		this.actualOffset = (this.actualOffset + how) % this.size;
 	}
 
@@ -148,6 +152,10 @@ public class Scambiatore implements Rotore, ClickListener {
 
 	public char getCurrentPosition(){
 		return (char) ('A' + (this.initialOffset + this.actualOffset)%26);
+	}
+
+	public int getInitialOffset(){
+		return this.initialOffset;
 	}
 
 }

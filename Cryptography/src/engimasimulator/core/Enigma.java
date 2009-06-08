@@ -10,15 +10,14 @@ package engimasimulator.core;
  * @author francescoburato
  */
 public class Enigma {
-	private PannelloPrese panel;
-	private Scambiatore used[];
-	private Scambiatore possible[];
-	private Riflessore rif;
-	private final int size = 26;
+	protected PannelloPrese panel;
+	protected Scambiatore used[];
+	protected Scambiatore possible[];
+	protected Riflessore rif;
+	protected final int size = 26;
 
 	public Enigma() throws java.io.IOException{
 		java.io.FileInputStream stream = new java.io.FileInputStream(new java.io.File("files/scambiatori.conf"));
-		//java.io.InputStream stream = this.getClass().getResourceAsStream("scambiatori.conf");
 		int num = 0,temp = stream.read();
 		while(temp != '\n'){
 			num = num * 10 + temp - '0';
@@ -52,7 +51,7 @@ public class Enigma {
 		return this.panel.getPanel();
 	}
 
-	private void setTurningRules(){
+	protected void setTurningRules(){
 		for(int i = 0 ;i < this.used.length -1; ++i)
 			this.used[i].addClickListener(this.used[i+1]);
 	}
