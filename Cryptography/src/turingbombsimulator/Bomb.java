@@ -15,21 +15,26 @@ public class Bomb {
 	private EnigmaForAnalysis enigmas[];
 	private CribNode[] vett;
 	private int offset;
+	private int[] scambUsed;
+	private java.util.ArrayList<String> possibleRes;
 
-	public Bomb(String crib, String codedcrib, int initOffset) throws BadCribException {
+	public Bomb(String crib, String codedcrib, int initOffset, int[] ord) throws BadCribException {
 		this.crib = crib.toCharArray();
 		this.codedcrib = codedcrib.toCharArray();
 		this.offset = initOffset;
 		this.configure();
+		this.possibleRes = new java.util.ArrayList<String>();
 		if(this.vett == null)
 			throw new BadCribException("Crib senza ciclo");
 		else
 			this.enigmas = new EnigmaForAnalysis[this.vett.length];
+		this.scambUsed = new int[ord.length];
+		for(int i = 0; i < this.scambUsed.length; ++i)
+			this.scambUsed[i] = ord[i];
 		try {
 			for (int i = 0; i < this.enigmas.length; ++i) {
 				this.enigmas[i] = new EnigmaForAnalysis(initOffset);
-				int[] ord = {0, 1, 2};
-				this.enigmas[i].setUsed(ord);
+				this.enigmas[i].setUsed(this.scambUsed);
 				this.enigmas[i].setPanel("abcdefghijklmnopqrstuvwxyz");
 				this.enigmas[i].setOffsets("aaa".toCharArray());
 				//int j = this.vett[i].getOffset();
@@ -47,12 +52,12 @@ public class Bomb {
 	 * s->u->n->l->s
 	 */
 
-	public void configure() {
+	private void configure() {
 		if(this.crib.length==this.codedcrib.length){
 			this.normalConfiguration(this.crib,this.codedcrib,0);
 		}else if(this.codedcrib.length > this.crib.length){
 			boolean trovato = false;
-			for(int i = 0; ! trovato && i < this.codedcrib.length - this.crib.length+1; ++i){
+			for(int i = 0; ! trovato && i < this.codedcrib.length - this.crib.length; ++i){
 				char[] newCodedCrib = new char[this.crib.length];
 				for(int j = 0; j < newCodedCrib.length; ++j)
 					newCodedCrib[j] = this.codedcrib[i+j];
@@ -83,9 +88,7 @@ public class Bomb {
 	}
 
 	public void find() {
-		boolean trovato = false;
-		int conf = -1;
-		for (int j = 0;!trovato && j < 17576; ++j) {
+		for (int j = 0;j < 17576; ++j) {
 			char c =(char) (this.vett[0].getChiaro() - 'a' + 'A');
 			boolean ancoraOk = true;
 			for (int i = 0; i < this.enigmas.length; ++i){
@@ -93,11 +96,25 @@ public class Bomb {
 				ancoraOk = ancoraOk && c == this.vett[i].getCifra();
 			}
 			if(ancoraOk){
-				trovato = true;
-				conf = j;
+				this.possibleRes.add(numberToAlfaConversion(j-this.offset));
 			}
 		}
-		System.out.println(numberToAlfaConversion(conf-this.offset));
+	}
+
+	public void printSolutions(){
+		for(int i = 0; i < this.possibleRes.size(); ++i)
+			System.out.println(this.possibleRes.get(i));
+	}
+
+	public String[] getResults(){
+		String[] res = new String[this.possibleRes.size()];
+		for(int i = 0; i < res.length; ++i)
+			res[i] =(String) this.possibleRes.get(i);
+		return res;
+	}
+
+	public int[] getArray(){
+		return this.scambUsed;
 	}
 
 	public static int alfaToNumberConversion(String s) {
@@ -146,7 +163,9 @@ public class Bomb {
 
 	public static void main(String argv[]) throws Exception {
 		//Bomb b = new Bomb("swetternull", "XOHMKMOEUKXNHCFLNJSQCLL",0);
-		Bomb b = new Bomb("swetternull", "XOHMKMOEUKXNHCFLNJSQCLL",0);
+		int[] ord = {0,1,2};
+		Bomb b = new Bomb("swetternull", "XOHMKMOEUKXNHCFLNJSQCLL",0,ord);
 		b.find();
+		b.printSolutions();
 	}
 }
