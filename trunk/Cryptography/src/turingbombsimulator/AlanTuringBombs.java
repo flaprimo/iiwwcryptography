@@ -14,6 +14,8 @@ public class AlanTuringBombs {
 	private String codedCrib;
 	private int initOffset;
 	public AlanTuringBombs(String crib, String codedcrib, int initOffset) throws BadCribException{
+		if(crib.length() == 0 || codedcrib.length() == 0)
+			throw new BadCribException("Passate Stringhe vuote");
 		this.crib = crib;
 		this.codedCrib = codedcrib;
 		this.threads = new BombRunner[60];
@@ -50,6 +52,13 @@ public class AlanTuringBombs {
 				System.out.println(s[j]);
 		}
 	}
+
+	public String[] getSolverResult(int i){
+		if(i>= 0 && i < this.threads.length)
+			return this.threads[i].getRes();
+		else
+			return null;
+	}
 	public static int fact(int n) {
 		return n <= 0 ? 1 : n * fact(n - 1);
 	}
@@ -82,6 +91,13 @@ public class AlanTuringBombs {
 			res[i] = s[i];
 		}
 		return res;
+	}
+
+	public String getSequence(){
+		if(this.threads!= null && this.threads[0]!= null)
+			return this.threads[0].getSequence();
+		else
+			return "";
 	}
 
 	public static void main(String argv[]) throws Exception{

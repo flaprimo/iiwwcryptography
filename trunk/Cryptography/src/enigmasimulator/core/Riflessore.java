@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package engimasimulator.core;
+package enigmasimulator.core;
 
 /**
  *

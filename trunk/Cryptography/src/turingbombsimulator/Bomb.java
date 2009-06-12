@@ -101,9 +101,12 @@ public class Bomb {
 		}
 	}
 
-	public void printSolutions(){
-		for(int i = 0; i < this.possibleRes.size(); ++i)
-			System.out.println(this.possibleRes.get(i));
+	public String printSequence(){
+		String res = "";
+		for(int i = 0; i < this.vett.length; ++i)
+			res = res + this.vett[i].getChiaro() + "->";
+		res = res + (char) (this.vett[this.vett.length-1].getCifra() - 'A' + 'a');
+		return res;
 	}
 
 	public String[] getResults(){
@@ -114,7 +117,10 @@ public class Bomb {
 	}
 
 	public int[] getArray(){
-		return this.scambUsed;
+		int[] res = new int[this.scambUsed.length];
+		for(int i = 0 ; i < res.length; ++i)
+			res[i] = this.scambUsed[i];
+		return res;
 	}
 
 	public static int alfaToNumberConversion(String s) {
@@ -166,6 +172,6 @@ public class Bomb {
 		int[] ord = {0,1,2};
 		Bomb b = new Bomb("swetternull", "XOHMKMOEUKXNHCFLNJSQCLL",0,ord);
 		b.find();
-		b.printSolutions();
+		System.out.println(b.printSequence());
 	}
 }

@@ -4,7 +4,7 @@
  */
 
 package turingbombsimulator;
-import engimasimulator.core.*;
+import enigmasimulator.core.*;
 /**
  *
  * @author francescoburato

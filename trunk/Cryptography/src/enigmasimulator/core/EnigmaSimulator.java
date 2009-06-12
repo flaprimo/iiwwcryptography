@@ -8,7 +8,7 @@
  *
  * Created on 25-mag-2009, 17.32.53
  */
-package engimasimulator.core;
+package enigmasimulator.core;
 
 /**
  *

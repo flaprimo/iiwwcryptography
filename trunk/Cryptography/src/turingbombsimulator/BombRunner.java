@@ -27,4 +27,8 @@ public class BombRunner implements Runnable{
 	public int[] getScamb(){
 		return this.myBomb.getArray();
 	}
+
+	public String getSequence(){
+		return this.myBomb.printSequence();
+	}
 }
