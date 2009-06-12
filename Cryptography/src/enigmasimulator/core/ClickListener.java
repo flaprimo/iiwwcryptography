@@ -3,13 +3,12 @@
  * and open the template in the editor.
  */
 
-package engimasimulator.core;
+package enigmasimulator.core;
 
 /**
  *
  * @author francescoburato
  */
-public interface Rotore{
-	public int forwardEncoding(int c);
-	public int backwardEncoding(int c);
+public interface ClickListener {
+	public void clickArrived(ClickEvent evt);
 }
