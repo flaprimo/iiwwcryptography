@@ -26,12 +26,4 @@ public class EnigmaForAnalysis extends Enigma{
 			s = s + c[i];
 		return s;
 	}
-	public void resetAndAdd(){
-		/*super.reset();
-		int[] vect = new int[this.used.length];
-		for(int i = 0; i < this.used.length; ++i)
-			vect[i] = this.used[i].getInitialOffset();
-		this.setOffsets(vect);
-		this.addOffsets(this.initOffset);*/
-	}
 }
