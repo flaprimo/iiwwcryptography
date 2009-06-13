@@ -36,6 +36,7 @@ public class AlanTuringBombs {
 			try{
 			t[i].join();
 			}catch(InterruptedException e){
+				//never happen
 				e.printStackTrace();
 			}
 		}
